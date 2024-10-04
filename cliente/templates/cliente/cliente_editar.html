@@ -1,0 +1,17 @@
+<!-- cliente/templates/cliente/editar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Editar Cliente{% endblock %}
+
+{% block content %}
+<h1>Editar Cliente</h1>
+<form method="post">
+    <label>Nome:</label><br>
+    <input type="text" name="nome" value="{{ cliente.nome }}" required><br><br>
+    <label>Email:</label><br>
+    <input type="email" name="email" value="{{ cliente.email }}" required><br><br>
+    <label>Telefone:</label><br>
+    <input type="text" name="telefone" value="{{ cliente.telefone }}"><br><br>
+    <button type="submit">Atualizar</button>
+</form>
+{% endblock %}

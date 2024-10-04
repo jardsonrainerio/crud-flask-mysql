@@ -1,0 +1,17 @@
+<!-- fornecedor/templates/fornecedor/criar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Criar Fornecedor{% endblock %}
+
+{% block content %}
+<h1>Criar Fornecedor</h1>
+<form method="post">
+    <label>Nome:</label><br>
+    <input type="text" name="nome" required><br><br>
+    <label>Produto:</label><br>
+    <input type="text" name="produto"><br><br>
+    <label>Contato:</label><br>
+    <input type="text" name="contato"><br><br>
+    <button type="submit">Criar</button>
+</form>
+{% endblock %}

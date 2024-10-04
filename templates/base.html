@@ -1,0 +1,113 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sistema{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Estilos básicos para melhor visualização */
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+        nav a { margin-right: 15px; text-decoration: none; color: #007BFF; }
+        nav a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white; }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 12px; text-align: left; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .flash { color: red; }
+
+        /* Estilos para Paginação */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 2px;
+            text-decoration: none;
+            color: #007BFF;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .pagination a:hover {
+            background-color: #ddd;
+        }
+
+        .pagination .current {
+            background-color: #007BFF;
+            color: white;
+            border: 1px solid #007BFF;
+        }
+
+        /* Estilos para a Página Inicial */
+        .welcome {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .welcome h1 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .welcome p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .menu {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .menu h2 {
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu li {
+            display: inline-block;
+            margin: 10px 20px;
+        }
+
+        .menu a {
+            display: block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a> |
+        <a href="{{ url_for('cliente.listar') }}">Clientes</a> |
+        <a href="{{ url_for('fornecedor.listar') }}">Fornecedores</a>
+    </nav>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</body>
+</html>

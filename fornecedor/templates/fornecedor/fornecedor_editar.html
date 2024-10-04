@@ -1,0 +1,17 @@
+<!-- fornecedor/templates/fornecedor/editar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Editar Fornecedor{% endblock %}
+
+{% block content %}
+<h1>Editar Fornecedor</h1>
+<form method="post">
+    <label>Nome:</label><br>
+    <input type="text" name="nome" value="{{ fornecedor.nome }}" required><br><br>
+    <label>Produto:</label><br>
+    <input type="text" name="produto" value="{{ fornecedor.produto }}"><br><br>
+    <label>Contato:</label><br>
+    <input type="text" name="contato" value="{{ fornecedor.contato }}"><br><br>
+    <button type="submit">Atualizar</button>
+</form>
+{% endblock %}

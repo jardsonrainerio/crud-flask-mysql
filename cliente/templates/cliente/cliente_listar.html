@@ -1,0 +1,52 @@
+<!-- cliente/templates/cliente/listar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+<h1>Clientes</h1>
+<a href="{{ url_for('cliente.criar') }}">Criar Novo Cliente</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+    </tr>
+    {% for cliente in clientes %}
+    <tr>
+        <td>{{ cliente.id }}</td>
+        <td>{{ cliente.nome }}</td>
+        <td>{{ cliente.email }}</td>
+        <td>{{ cliente.telefone }}</td>
+        <td>
+            <a href="{{ url_for('cliente.detalhes', id=cliente.id) }}">Detalhes</a> |
+            <a href="{{ url_for('cliente.editar', id=cliente.id) }}">Editar</a> |
+            <form action="{{ url_for('cliente.deletar', id=cliente.id) }}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este cliente?')">Deletar</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- Controles de Paginação -->
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="{{ url_for('cliente.listar', page=page-1) }}">&laquo; Anterior</a>
+    {% endif %}
+
+    {% for p in range(1, total_pages + 1) %}
+        {% if p == page %}
+            <span class="current">{{ p }}</span>
+        {% else %}
+            <a href="{{ url_for('cliente.listar', page=p) }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('cliente.listar', page=page+1) }}">Próxima &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}

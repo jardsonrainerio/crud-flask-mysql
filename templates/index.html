@@ -1,0 +1,19 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<div class="welcome">
+    <h1>Bem-vindo ao Sistema de Clientes e Fornecedores</h1>
+    <p>Gerencie seus clientes e fornecedores de forma eficiente.</p>
+</div>
+
+<div class="menu">
+    <h2>Navegação</h2>
+    <ul>
+        <li><a href="{{ url_for('cliente.listar') }}">Gerenciar Clientes</a></li>
+        <li><a href="{{ url_for('fornecedor.listar') }}">Gerenciar Fornecedores</a></li>
+    </ul>
+</div>
+{% endblock %}

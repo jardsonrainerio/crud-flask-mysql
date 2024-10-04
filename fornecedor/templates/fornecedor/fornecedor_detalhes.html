@@ -1,0 +1,14 @@
+<!-- fornecedor/templates/fornecedor/detalhes.html -->
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Fornecedor{% endblock %}
+
+{% block content %}
+<h1>Detalhes do Fornecedor</h1>
+<p><strong>ID:</strong> {{ fornecedor.id }}</p>
+<p><strong>Nome:</strong> {{ fornecedor.nome }}</p>
+<p><strong>Produto:</strong> {{ fornecedor.produto }}</p>
+<p><strong>Contato:</strong> {{ fornecedor.contato }}</p>
+<a href="{{ url_for('fornecedor.editar', id=fornecedor.id) }}">Editar</a> |
+<a href="{{ url_for('fornecedor.listar') }}">Voltar</a>
+{% endblock %}
