@@ -1,22 +1,26 @@
 # db.py
 import mysql.connector
 from mysql.connector import Error
-from flask import g, current_app
-import atexit
+from dotenv import load_dotenv
+import os
 
-DATABASE_CONFIG = {
-    'host': 'localhost',
-    'database': 'mydatabase',
-    'user': 'root',
-    'password': 'myrootpassword'
-}
+load_dotenv()
 
 def get_db():
-    db = mysql.connector.connect(host="localhost",
-                                 database='mydatabase',
-                                 user="root",
-                                 passwd='myrootpassword', use_pure=True)
-    return db
+    try:
+        db = mysql.connector.connect(
+            host= os.getenv('DB_HOST', 'localhost'),
+            database= os.getenv('DB_DATABASE', 'teste'),
+            user= os.getenv('DB_USER', 'flaskuser'),
+            passwd= os.getenv('DB_PASSWORD', 'senha_segura'),
+            use_pure=True
+        )
+        if db.is_connected():
+            print("Conexão com o banco de dados foi estabelecida com sucesso!")
+            return db
+    except Error as e:
+        print(f"Erro ao conectar ao banco de dados: {e}")
+        return None
 
 def init_db():
     db = get_db()
@@ -52,11 +56,3 @@ def init_db():
     ''')
     db.commit()
     cursor.close()
-
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None and db.is_connected():
-        db.close()
-
-# Registro do fechamento da conexão ao final da aplicação
-atexit.register(close_connection)
