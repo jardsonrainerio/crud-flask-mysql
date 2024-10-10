@@ -1,18 +1,22 @@
-<!-- cliente/templates/cliente/listar.html -->
+<!-- templates/cliente/listar.html -->
 {% extends 'base.html' %}
 
-{% block title %}Clientes{% endblock %}
+{% block title %}Lista de Clientes{% endblock %}
 
 {% block content %}
 <h1>Clientes</h1>
-<a href="{{ url_for('cliente.criar') }}">Criar Novo Cliente</a>
+{% if session.get('user_id') %}
+    <a href="{{ url_for('cliente.criar') }}">Criar Novo Cliente</a>
+{% endif %}
 <table>
     <tr>
         <th>ID</th>
         <th>Nome</th>
         <th>Email</th>
         <th>Telefone</th>
-        <th>Ações</th>
+        {% if session.get('user_id') %}
+            <th>Ações</th>
+        {% endif %}
     </tr>
     {% for cliente in clientes %}
     <tr>
@@ -20,13 +24,15 @@
         <td>{{ cliente.nome }}</td>
         <td>{{ cliente.email }}</td>
         <td>{{ cliente.telefone }}</td>
-        <td>
-            <a href="{{ url_for('cliente.detalhes', id=cliente.id) }}">Detalhes</a> |
-            <a href="{{ url_for('cliente.editar', id=cliente.id) }}">Editar</a> |
-            <form action="{{ url_for('cliente.deletar', id=cliente.id) }}" method="post" style="display:inline;">
-                <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este cliente?')">Deletar</button>
-            </form>
-        </td>
+        {% if session.get('user_id') %}
+            <td>
+                <a href="{{ url_for('cliente.detalhes', id=cliente.id) }}">Detalhes</a> |
+                <a href="{{ url_for('cliente.editar', id=cliente.id) }}">Editar</a> |
+                <form action="{{ url_for('cliente.deletar', id=cliente.id) }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este cliente?')">Deletar</button>
+                </form>
+            </td>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>
