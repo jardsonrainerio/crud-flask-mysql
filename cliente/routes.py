@@ -1,6 +1,7 @@
 # cliente/routes.py
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from db import get_db
+from auth import login_required  # Importa o decorador login_required
 import mysql.connector
 
 cliente_bp = Blueprint('cliente', __name__, template_folder='templates/cliente')
@@ -45,6 +46,7 @@ def listar():
 
 
 @cliente_bp.route('/criar', methods=['GET', 'POST'])
+@login_required
 def criar():
     if request.method == 'POST':
         nome = request.form['nome']

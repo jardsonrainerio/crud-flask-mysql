@@ -1,0 +1,64 @@
+<!-- pessoa/templates/pessoa/listar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Lista de Pessoas{% endblock %}
+
+{% block content %}
+<h1>Pessoas</h1>
+{% if session.get('user_id') %}
+    <a href="{{ url_for('pessoa.criar') }}">Criar Nova Pessoa</a>
+{% endif %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Data de Nascimento</th>
+        <th>Foto</th>
+        {% if session.get('user_id') %}
+            <th>Ações</th>
+        {% endif %}
+    </tr>
+    {% for pessoa in pessoas %}
+    <tr>
+        <td>{{ pessoa.id }}</td>
+        <td>{{ pessoa.nome }}</td>
+        <td>{{ pessoa.data_nascimento.strftime('%d/%m/%Y') if pessoa.data_nascimento else 'N/A' }}</td>
+        <td>
+            {% if pessoa.foto %}
+                <img src="{{ url_for('static', filename=pessoa.foto) }}" alt="Foto de {{ pessoa.nome }}" width="100">
+            {% else %}
+                N/A
+            {% endif %}
+        </td>
+        {% if session.get('user_id') %}
+            <td>
+                <a href="{{ url_for('pessoa.detalhes', id=pessoa.id) }}">Detalhes</a> |
+                <a href="{{ url_for('pessoa.editar', id=pessoa.id) }}">Editar</a> |
+                <form action="{{ url_for('pessoa.deletar', id=pessoa.id) }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Tem certeza que deseja deletar esta pessoa?')">Deletar</button>
+                </form>
+            </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- Controles de Paginação -->
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="{{ url_for('pessoa.listar', page=page-1) }}">&laquo; Anterior</a>
+    {% endif %}
+
+    {% for p in range(1, total_pages + 1) %}
+        {% if p == page %}
+            <span class="current">{{ p }}</span>
+        {% else %}
+            <a href="{{ url_for('pessoa.listar', page=p) }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('pessoa.listar', page=page+1) }}">Próxima &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}

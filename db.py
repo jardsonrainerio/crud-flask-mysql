@@ -54,5 +54,14 @@ def init_db():
             password VARCHAR(255) NOT NULL
         )
     ''')
+    # Criação da tabela pessoa
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS pessoa (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome VARCHAR(100) NOT NULL,
+            data_nascimento DATE,
+            foto VARCHAR(255)
+        )
+    ''')
     db.commit()
     cursor.close()

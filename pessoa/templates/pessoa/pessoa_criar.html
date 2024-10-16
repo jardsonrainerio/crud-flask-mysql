@@ -1,0 +1,20 @@
+<!-- pessoa/templates/pessoa/criar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Criar Pessoa{% endblock %}
+
+{% block content %}
+<h1>Criar Nova Pessoa</h1>
+<form method="post" enctype="multipart/form-data">
+    <label>Nome:</label><br>
+    <input type="text" name="nome" required><br><br>
+
+    <label>Data de Nascimento:</label><br>
+    <input type="date" name="data_nascimento"><br><br>
+
+    <label>Foto:</label><br>
+    <input type="file" name="foto" accept="image/*"><br><br>
+
+    <button type="submit">Criar</button>
+</form>
+{% endblock %}

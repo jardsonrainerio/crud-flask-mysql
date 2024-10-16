@@ -1,0 +1,24 @@
+<!-- pessoa/templates/pessoa/detalhes.html -->
+{% extends 'base.html' %}
+
+{% block title %}Detalhes da Pessoa{% endblock %}
+
+{% block content %}
+<h1>Detalhes da Pessoa</h1>
+<p><strong>ID:</strong> {{ pessoa.id }}</p>
+<p><strong>Nome:</strong> {{ pessoa.nome }}</p>
+<p><strong>Data de Nascimento:</strong> {{ pessoa.data_nascimento.strftime('%d/%m/%Y') if pessoa.data_nascimento else 'N/A' }}</p>
+<p><strong>Foto:</strong><br>
+    {% if pessoa.foto %}
+        <img src="{{ url_for('static', filename=pessoa.foto) }}" alt="Foto de {{ pessoa.nome }}" width="200">
+    {% else %}
+        N/A
+    {% endif %}
+</p>
+{% if session.get('user_id') %}
+    <a href="{{ url_for('pessoa.editar', id=pessoa.id) }}">Editar</a> |
+    <form action="{{ url_for('pessoa.deletar', id=pessoa.id) }}" method="post" style="display:inline;">
+        <button type="submit" onclick="return confirm('Tem certeza que deseja deletar esta pessoa?')">Deletar</button>
+    </form>
+{% endif %}
+{% endblock %}

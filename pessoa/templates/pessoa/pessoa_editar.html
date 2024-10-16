@@ -1,0 +1,27 @@
+<!-- pessoa/templates/pessoa/editar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Editar Pessoa{% endblock %}
+
+{% block content %}
+<h1>Editar Pessoa</h1>
+<form method="post" enctype="multipart/form-data">
+    <label>Nome:</label><br>
+    <input type="text" name="nome" value="{{ pessoa.nome }}" required><br><br>
+
+    <label>Data de Nascimento:</label><br>
+    <input type="date" name="data_nascimento" value="{{ pessoa.data_nascimento.strftime('%Y-%m-%d') if pessoa.data_nascimento else '' }}"><br><br>
+
+    <label>Foto Atual:</label><br>
+    {% if pessoa.foto %}
+        <img src="{{ url_for('static', filename=pessoa.foto) }}" alt="Foto de {{ pessoa.nome }}" width="200"><br><br>
+    {% else %}
+        N/A<br><br>
+    {% endif %}
+
+    <label>Nova Foto (deixe em branco para manter a atual):</label><br>
+    <input type="file" name="foto" accept="image/*"><br><br>
+
+    <button type="submit">Atualizar</button>
+</form>
+{% endblock %}
